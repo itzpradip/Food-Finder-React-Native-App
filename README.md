@@ -5,3 +5,4 @@ This repository is based on my YouTube tutorial series where I'm creating a comp
 ## Watch it on YouTube
 - [App Screen UI using react navigation v5, authentication & dark theme](https://www.youtube.com/playlist?list=PLQWFhX-gwJbmmqcP-9zMXBaxQbGKfIJY2)
 - [Installing react-native-maps and Map Dark Mode](https://www.youtube.com/watch?v=4N-8RTeQ1fA)
+- [Sliding items on MapView with Animation](https://www.youtube.com/watch?v=2vILzRmEqGI)

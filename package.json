@@ -35,7 +35,9 @@
     "babel-jest": "^24.9.0",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
+    "jetifier": "^1.6.5",
     "metro-react-native-babel-preset": "^0.58.0",
+    "react-native-dotenv": "^0.2.0",
     "react-test-renderer": "16.11.0"
   },
   "jest": {
