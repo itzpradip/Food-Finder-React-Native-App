@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './HomeScreen';
-import DetailsScreen from './DetailsScreen';
+import NotificationScreen from './NotificationScreen';
 import ExploreScreen from './ExploreScreen';
 import ProfileScreen from './ProfileScreen';
 import MapTestScreen from './MapTestScreen';
@@ -17,7 +17,7 @@ import {useTheme} from 'react-native-paper';
 import { View } from 'react-native-animatable';
 
 const HomeStack = createStackNavigator();
-const DetailsStack = createStackNavigator();
+const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
@@ -37,7 +37,7 @@ const MainTabScreen = () => (
     />
     <Tab.Screen
       name="Notifications"
-      component={DetailsStackScreen}
+      component={NotificationStackScreen}
       options={{
         tabBarLabel: 'Updates',
         tabBarColor: '#1f65ff',
@@ -102,8 +102,8 @@ const HomeStackScreen = ({navigation}) => (
   </HomeStack.Navigator>
 );
 
-const DetailsStackScreen = ({navigation}) => (
-  <DetailsStack.Navigator
+const NotificationStackScreen = ({navigation}) => (
+  <NotificationStack.Navigator
     screenOptions={{
       headerStyle: {
         backgroundColor: '#1f65ff',
@@ -113,9 +113,9 @@ const DetailsStackScreen = ({navigation}) => (
         fontWeight: 'bold',
       },
     }}>
-    <DetailsStack.Screen
-      name="Details"
-      component={DetailsScreen}
+    <NotificationStack.Screen
+      name="Notifications"
+      component={NotificationScreen}
       options={{
         headerLeft: () => (
           <Icon.Button
@@ -127,7 +127,7 @@ const DetailsStackScreen = ({navigation}) => (
         ),
       }}
     />
-  </DetailsStack.Navigator>
+  </NotificationStack.Navigator>
 );
 
 const ProfileStackScreen = ({navigation}) => {
