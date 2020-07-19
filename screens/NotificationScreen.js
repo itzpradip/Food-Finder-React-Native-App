@@ -70,6 +70,7 @@ const NotificationScreen = ({navigation}) => {
       Animated.timing(rowHeightAnimatedValue, {
         toValue: 0,
         duration: 200,
+        useNativeDriver: false,
       }).start(() => {
         removeRow();
       });
@@ -121,10 +122,12 @@ const NotificationScreen = ({navigation}) => {
     if (rightActionActivated) {
       Animated.spring(rowActionAnimatedValue, {
         toValue: 500,
+        useNativeDriver: false
       }).start();
     } else {
       Animated.spring(rowActionAnimatedValue, {
         toValue: 75,
+        useNativeDriver: false
       }).start();
     }
 
