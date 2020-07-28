@@ -9,6 +9,7 @@ This repository is based on my YouTube tutorial series where I'm creating a comp
 - [React Native Reanimated Bottom Sheet](https://github.com/osdnk/react-native-reanimated-bottom-sheet)
 - [React Native Image Crop Picker](https://github.com/ivpusic/react-native-image-crop-picker)
 - [React Native Swipe ListView](https://github.com/jemise111/react-native-swipe-list-view)
+- [React Native Share](https://github.com/react-native-community/react-native-share)
 
 ## Watch it on YouTube
 - [App Screen UI using react navigation v5, authentication & dark theme](https://www.youtube.com/playlist?list=PLQWFhX-gwJbmmqcP-9zMXBaxQbGKfIJY2)
@@ -17,3 +18,4 @@ This repository is based on my YouTube tutorial series where I'm creating a comp
 - [Profile & Edit Profile Screen UI with React Native Bottom Sheet](https://youtu.be/mjJzaiGkaQA)
 - [React Native Image Picker Tutorial](https://youtu.be/3_ldEVWlL18)
 - [Swipe To Delete in React Native](https://youtu.be/k-Ra0tdCEOc)
+- [React Native Social Share](https://youtu.be/vXzpEJeVmi8)
