@@ -16,6 +16,8 @@ import EditProfileScreen from './EditProfileScreen';
 import {useTheme, Avatar} from 'react-native-paper';
 import {View} from 'react-native-animatable';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import CardListScreen from './CardListScreen';
+import CardItemDetails from './CardItemDetails';
 
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
@@ -130,6 +132,25 @@ const HomeStackScreen = ({navigation}) => {
             </View>
           ),
         }}
+      />
+      <HomeStack.Screen 
+        name="CardListScreen"
+        component={CardListScreen}
+        options={({route}) => ({
+          title: route.params.title,
+          headerBackTitleVisible: false
+        })}
+      />
+      <HomeStack.Screen 
+        name="CardItemDetails"
+        component={CardItemDetails}
+        options={({route}) => ({
+          // title: route.params.title,
+          headerBackTitleVisible: false,
+          headerTitle: false,
+          headerTransparent: true,
+          headerTintColor: '#fff'
+        })}
       />
     </HomeStack.Navigator>
   );

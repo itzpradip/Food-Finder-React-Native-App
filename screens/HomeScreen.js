@@ -18,8 +18,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import StarRating from '../components/StarRating';
 
 const HomeScreen = ({navigation}) => {
-  const {colors} = useTheme();
-
   const theme = useTheme();
 
   return (
@@ -56,13 +54,21 @@ const HomeScreen = ({navigation}) => {
       </View>
 
       <View style={styles.categoryContainer}>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Restaurant'})
+          }>
           <View style={styles.categoryIcon}>
             <Ionicons name="ios-restaurant" size={35} color="#FF6347" />
           </View>
           <Text style={styles.categoryBtnTxt}>Restaurant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate('CardListScreen', {title: 'Fastfood Center'})
+          }>
           <View style={styles.categoryIcon}>
             <MaterialCommunityIcons
               name="food-fork-drink"
