@@ -11,6 +11,7 @@ This repository is based on my YouTube tutorial series where I'm creating a comp
 - [React Native Swipe ListView](https://github.com/jemise111/react-native-swipe-list-view)
 - [React Native Share](https://github.com/react-native-community/react-native-share)
 - [React Native Swiper](https://github.com/leecade/react-native-swiper)
+- [React Native Image Header ScrollView](https://github.com/bamlab/react-native-image-header-scroll-view)
 
 ## Watch it on YouTube
 - [App Screen UI using react navigation v5, authentication & dark theme](https://www.youtube.com/playlist?list=PLQWFhX-gwJbmmqcP-9zMXBaxQbGKfIJY2)
@@ -21,3 +22,4 @@ This repository is based on my YouTube tutorial series where I'm creating a comp
 - [Swipe To Delete in React Native](https://youtu.be/k-Ra0tdCEOc)
 - [React Native Social Share](https://youtu.be/vXzpEJeVmi8)
 - [App Home Screen UI with Vertical Image Slider](https://www.youtube.com/watch?v=GXe3EuVog9c)
+- [Animated Header in React Native](https://youtu.be/JqlYrpoExE8)
