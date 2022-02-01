@@ -21,6 +21,7 @@ const MAX_HEIGHT = 350;
 
 const CardItemDetails = ({route}) => {
   const itemData = route.params.itemData;
+  console.log('itemData  ',itemData)
   const navTitleView = useRef(null);
 
   return (
