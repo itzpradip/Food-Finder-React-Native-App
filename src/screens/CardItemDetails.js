@@ -8,7 +8,7 @@ import {
   StatusBar,
   Platform,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import HeaderImageScrollView, {
   TriggeringView,
@@ -20,33 +20,54 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { foodData } from '../model/foodData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { set } from 'react-native-reanimated';
+import Modal from './ModalPurchase';
 
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
 
 const CardItemDetails = ({ route }) => {
   const itemData = route.params.itemData;
-
   const [cartItems, setCartItems] = useState(foodData);
-
-  console.log('passou em cont', cartItems)
-
+  const [totalQuantity, setTotalQuantity] = useState();
+  const [totalPrice, setTotalPrice] = useState();
+  console.log('total preço  ', totalPrice)
+  const [modalVisible, setModalVisible] = useState(false);
   const navTitleView = useRef(null);
-
 
   const handleAdd = (item) => {
     let newQuantity = [...foodData];
     newQuantity[item.id - 1].quantity++;
-    setCartItems(newQuantity)
+    setCartItems(newQuantity);
+    calculateTotalQuantity();
+    calculateTotalPrice();
   };
 
   const handleSubtraction = (item) => {
     let newQuantity = [...foodData];
     newQuantity[item.id - 1].quantity--;
+    setCartItems(newQuantity);
+    calculateTotalQuantity();
+    calculateTotalPrice();
+  };
 
-    setCartItems(newQuantity)
-  }
+  const toggleModalPayment = () => {
+    setModalVisible(!modalVisible)
+  };
 
+  const calculateTotalQuantity = () => {
+    let totalItemQuantity = foodData.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+    setTotalQuantity(totalItemQuantity)
+  };
+
+  const calculateTotalPrice = () => {
+    let totalItemPrice = foodData.reduce(total, 0);
+    function total(total, item) {
+      return total + (item.price * item.quantity);
+    };
+    setTotalPrice(totalItemPrice)
+  };
 
   return (
     <View style={styles.container}>
@@ -59,16 +80,16 @@ const CardItemDetails = ({ route }) => {
         renderHeader={() => (
           <Image source={itemData.image} style={styles.image} />
         )}
-      renderForeground={() => (
-        <View style={styles.titleContainer}>
-          <Text style={styles.imageTitle}>{itemData.title}</Text>
-        </View>
-      )}
-      renderFixedForeground={() => (
-        <Animatable.View style={styles.navTitleView} ref={navTitleView}>
-          <Text style={styles.navTitle}>{itemData.title}</Text>
-        </Animatable.View>
-      )}
+        renderForeground={() => (
+          <View style={styles.titleContainer}>
+            <Text style={styles.imageTitle}>{itemData.title}</Text>
+          </View>
+        )}
+        renderFixedForeground={() => (
+          <Animatable.View style={styles.navTitleView} ref={navTitleView}>
+            <Text style={styles.navTitle}>{itemData.title}</Text>
+          </Animatable.View>
+        )}
       >
         <TriggeringView
           style={styles.section}
@@ -94,15 +115,16 @@ const CardItemDetails = ({ route }) => {
                   item={item}
                   key={item.id}
                   style={styles.viewTouchable} >
-                  <View style={{ flex: 2, justifyContent: 'center' }}>
+                  <View style={{ flex: 3, justifyContent: 'center' }}>
                     <Text style={styles.textTouchable}>{item.foodName}</Text>
                   </View>
 
                   <View style={{
-                    flex: 1,
+                    flex: 2,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    justifyContent: 'flex-end'
+                    justifyContent: 'flex-end',
+                    backgroundColor: '#f0655b'
                   }}>
                     <View style={{
                       flex: 1,
@@ -147,6 +169,15 @@ const CardItemDetails = ({ route }) => {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}>
+                    <Text
+                      style={{ color: '#FF6347', fontSize: 16, fontWeight: '700' }}>{item.price * item.quantity}</Text>
+                  </View>
                 </View>
               ))}
             </ScrollView>
@@ -154,6 +185,7 @@ const CardItemDetails = ({ route }) => {
             <View
               style={{ justifyContent: 'center', alignItems: 'center' }}>
               <TouchableOpacity
+                onPress={() => setModalVisible(true)}
                 style={{
                   marginTop: 10,
                   elevation: 5,
@@ -182,7 +214,16 @@ const CardItemDetails = ({ route }) => {
             </View>
 
           </View>
+          <View>
+            <Modal
+              modalVisible={modalVisible}
+              toggleModal={toggleModalPayment}
+              totalQuantity={totalQuantity}
+              totalPrice={totalPrice}
+            />
+          </View>
         </View>
+
 
         <View style={styles.section}>
           <View style={styles.categories}>
@@ -205,6 +246,7 @@ const CardItemDetails = ({ route }) => {
               latitudeDelta: 0.00864195044303443,
               longitudeDelta: 0.000142817690068,
             }}>
+
             <MapView.Marker
               coordinate={itemData.coordinate}
               image={require('../assets/map_marker.png')}
@@ -228,7 +270,7 @@ const styles = StyleSheet.create({
     borderColor: '#FF6347',
     borderWidth: 1,
     borderRadius: 4,
-    width: 360,
+    width: 370,
     height: 50,
     backgroundColor: '#ffe',
     flexDirection: 'row'
