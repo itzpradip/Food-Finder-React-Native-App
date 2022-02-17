@@ -8,10 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import Modal from "react-native-modal";
-import { foodData } from '../model/foodData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
 
-export default function ModalPurchase({ totalQuantity, totalPrice, modalVisible, toggleModal }) {
+export default function ModalPurchase({ modalVisible, toggleModal, totalQuantity, totalPrice }) {
+  const foodData = useSelector(state => state.cart);
+
   return (
     <Modal
       animationInTiming={200}
