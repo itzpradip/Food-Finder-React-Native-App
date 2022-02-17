@@ -13,31 +13,33 @@ import {
 import HeaderImageScrollView, {
   TriggeringView,
 } from 'react-native-image-header-scroll-view';
-
 import * as Animatable from 'react-native-animatable';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { foodData } from '../model/foodData';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { set } from 'react-native-reanimated';
 import Modal from './ModalPurchase';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFood, removeFood } from '../store/cart/action';
+import { data } from '../model/data';
 
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
 
-const CardItemDetails = ({ route }) => {
-  const itemData = route.params.itemData;
-  const [cartItems, setCartItems] = useState(foodData);
+const CardItemDetails = () => {
+  const itemData = data;
+  console.log(itemData.map((item, i) => item?.title))
+  const foodData = useSelector(state => state.cart);
   const [totalQuantity, setTotalQuantity] = useState();
   const [totalPrice, setTotalPrice] = useState();
-  console.log('total preço  ', totalPrice)
   const [modalVisible, setModalVisible] = useState(false);
   const navTitleView = useRef(null);
+  const dispatch = useDispatch();
 
   const handleAdd = (item) => {
     let newQuantity = [...foodData];
     newQuantity[item.id - 1].quantity++;
-    setCartItems(newQuantity);
+
+    dispatch(addFood(newQuantity));
     calculateTotalQuantity();
     calculateTotalPrice();
   };
@@ -45,7 +47,8 @@ const CardItemDetails = ({ route }) => {
   const handleSubtraction = (item) => {
     let newQuantity = [...foodData];
     newQuantity[item.id - 1].quantity--;
-    setCartItems(newQuantity);
+
+    dispatch(removeFood(newQuantity));
     calculateTotalQuantity();
     calculateTotalPrice();
   };
@@ -58,7 +61,7 @@ const CardItemDetails = ({ route }) => {
     let totalItemQuantity = foodData.reduce((total, item) => {
       return total + item.quantity;
     }, 0);
-    setTotalQuantity(totalItemQuantity)
+    setTotalQuantity(totalItemQuantity);
   };
 
   const calculateTotalPrice = () => {
@@ -66,7 +69,7 @@ const CardItemDetails = ({ route }) => {
     function total(total, item) {
       return total + (item.price * item.quantity);
     };
-    setTotalPrice(totalItemPrice)
+    setTotalPrice(totalItemPrice);
   };
 
   return (
@@ -78,16 +81,16 @@ const CardItemDetails = ({ route }) => {
         maxOverlayOpacity={0.6}
         minOverlayOpacity={0.3}
         renderHeader={() => (
-          <Image source={itemData.image} style={styles.image} />
+          <Image source={itemData[0].image} style={styles.image} />
         )}
         renderForeground={() => (
           <View style={styles.titleContainer}>
-            <Text style={styles.imageTitle}>{itemData.title}</Text>
+            <Text style={styles.imageTitle}>{itemData[2].title}</Text>
           </View>
         )}
         renderFixedForeground={() => (
           <Animatable.View style={styles.navTitleView} ref={navTitleView}>
-            <Text style={styles.navTitle}>{itemData.title}</Text>
+            <Text style={styles.navTitle}>{itemData[3].title}</Text>
           </Animatable.View>
         )}
       >
@@ -96,12 +99,10 @@ const CardItemDetails = ({ route }) => {
           onHide={() => navTitleView.current.fadeInUp(200)}
           onDisplay={() => navTitleView.current.fadeOut(100)}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.title}>Overview</Text>
+            <Text style={styles.title}>Choose the most delicious</Text>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
               <FontAwesome name="star" size={16} color="#FF6347" />
-              <Text style={{ marginHorizontal: 2 }}>{itemData.rating}</Text>
-
-              <Text>({itemData.reviews})</Text>
+              <Text style={{ marginHorizontal: 2 }}>5</Text>
             </View>
           </View>
         </TriggeringView>
@@ -160,7 +161,9 @@ const CardItemDetails = ({ route }) => {
                       alignItems: 'center'
                     }}>
                       <TouchableOpacity
-                        onPress={() => handleSubtraction(item)}>
+                        onPress={() => handleSubtraction(item)}
+                        disabled={item.quantity > 0 ? '' : 'disabled'}
+                      >
                         <Text style={{
                           color: '#000',
                           fontSize: 40,
@@ -225,7 +228,7 @@ const CardItemDetails = ({ route }) => {
         </View>
 
 
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View style={styles.categories}>
             {itemData.categories.map((category, index) => (
               <View style={styles.categoryContainer} key={index}>
@@ -234,9 +237,9 @@ const CardItemDetails = ({ route }) => {
               </View>
             ))}
           </View>
-        </View>
+        </View> */}
 
-        <View style={[styles.section, { height: 250 }]}>
+        {/* <View style={[styles.section, { height: 250 }]}>
           <MapView
             provider={PROVIDER_GOOGLE}
             style={{ flex: 1 }}
@@ -252,7 +255,7 @@ const CardItemDetails = ({ route }) => {
               image={require('../assets/map_marker.png')}
             />
           </MapView>
-        </View>
+        </View> */}
       </HeaderImageScrollView>
     </View>
   );
