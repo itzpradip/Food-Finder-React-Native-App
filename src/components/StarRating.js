@@ -19,7 +19,7 @@ const StarRating = (props) => {
 
         stars.push((<Ionicons name={name} size={15} style={styles.star} key={i} />));
     }
-
+ 
     return (
         <View style={ styles.container }>
             { stars }
